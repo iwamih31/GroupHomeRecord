@@ -4,14 +4,10 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
@@ -22,14 +18,6 @@ public class Main extends AbstractTableModel implements Serializable{
 	private static String officeName = "Care office";
 
 	private static String name = officeName;
-//	static int hp = 100;//////////////////////削除
-
-	private static int g;
-
-	private static String mName = "きみ";
-	static int bHp = 3;
-
-	private static String bName = "きみ";
 
 	static Main mai;
 
@@ -42,8 +30,6 @@ public class Main extends AbstractTableModel implements Serializable{
 	private static String[] doText;
 
 	private static String[] text;
-
-	private static ArrayList<String> array;
 
 	private static Talk tal;
 
@@ -59,9 +45,6 @@ public class Main extends AbstractTableModel implements Serializable{
 	public static void main(String[] args) {///////////////////スタート
 
 		mai = new Main();///////////////////////////////////////////////////
-
-		bHp = 3;
-		g = 0;
 
 		columns = new String[3];
 		columns[0] = "事業所名";
@@ -114,132 +97,12 @@ public class Main extends AbstractTableModel implements Serializable{
 
 			name = officeName;
 
-			array = new ArrayList<String>();
+			new ArrayList<String>();
 
 			System.out.println("");
 			System.out.println("  ・・・");
 	}
 
-
-	static void action(int select) {
-
-		Object[] choice;
-		arrayClear();
-
-		switch (select) {
-
-			case 1 :
-
-				array.add(("―――――" + getName() + "は探検を続けた―――――"));
-
-				setText(array);
-
-				break;
-
-			case 2 :
-
-
-				break;
-			case 3 :
-
-
-				break;
-
-			case 4 :
-
-
-				break;
-
-			default :
-		}
-		save();
-	}
-
-	private static void arrayClear() {
-
-		if (array == null){
-			array = new ArrayList<String>();
-		}else{
-			for (int i = array.size(); i > 0; i--) {
-				array.remove(i-1);
-			}
-		}
-	}
-
-
-	private static void button(Object[] choices) {
-		// TODO 自動生成されたメソッド・スタブ
-		Screen.setMenu(choices);
-	}
-
-
-
-	private static void message(String setMessage) {
-
-		Screen.setMessage(setMessage);
-	}
-
-	static void save() {
-		try {
-			ObjectOutputStream sData = new ObjectOutputStream(new FileOutputStream(saveFile));
-
-			sData.writeObject(officeName);
-			sData.writeInt(bHp);
-			sData.writeInt(g);
-//			sData.writeObject(Item.getItemList());
-
-			sData.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.getMessage();
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.getMessage();
-			e.printStackTrace();
-		}
-
-	}
-
-
-	static void load() {
-
-		try {
-			ObjectInputStream sData = new ObjectInputStream(new FileInputStream(saveFile));
-
-			officeName = ""+ sData.readObject();
-			bHp = sData.readInt();
-			g = sData.readInt();
-//			Object ItemList = sData.readObject();
-
-			sData.close();
-
-			name = "" + officeName;
-
-//			Item.setItemList((Object[][]) ItemList);
-
-
-		} catch (FileNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.getMessage();
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.getMessage();
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.getMessage();
-			e.printStackTrace();
-		}
-	//	Story.beBack();
-	}
-
-
-	private static void end() {
-
-	}
 
 	static void scroll(int d) {
 		for (int i = 0; i < 30; i++) {
@@ -260,30 +123,6 @@ public class Main extends AbstractTableModel implements Serializable{
 
 	public static String getName() {
 		return name;
-	}
-
-	public static void setmName(String mName) {
-		Main.mName = mName;
-	}
-
-	public static String getmName() {
-		return mName;
-	}
-
-	public static void setG(int g) {
-		Main.g = g;
-	}
-
-	public static int getG() {
-		return g;
-	}
-
-	public static void setbName(String bName) {
-		Main.bName = bName;
-	}
-
-	public static String getbName() {
-		return bName;
 	}
 
 	@Override

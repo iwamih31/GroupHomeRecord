@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Sun Aug 07 18:54:47 JST 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0182-77ba-81a2-0000065a7320 
-on database directory C:\pleiades\workspace\Group Home Record\DbCaRe Care office  with class loader sun.misc.Launcher$ExtClassLoader@15227947 
+Tue Aug 09 15:23:57 JST 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0182-8146-32d0-000006602fa8 
+on database directory C:\pleiades\workspace\GroupHomeRecord\DbCaRe Care office  with class loader sun.misc.Launcher$ExtClassLoader@5d5bf22a 
 Loaded from file:/C:/pleiades/java/8/jre/lib/ext/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_202-b08
-user.dir=C:\pleiades\workspace\Group Home Record
+user.dir=C:\pleiades\workspace\GroupHomeRecord
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

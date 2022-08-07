@@ -7,13 +7,9 @@ public abstract class MyAbstractTableModel extends AbstractTableModel{
 
 	private static int[] width;
 	private static int[] horizontalAlignments;
-	private static int headerHeight; 
+	private static int headerHeight;
 	private static int rowHeight;
-	private static Object tableName;
-	private static String[] columns;
-	private static String ascColumn;
-	private static String uri;
-	
+
 	public void setWidth(int[] width) {
 		MyAbstractTableModel.width = width;
 	}

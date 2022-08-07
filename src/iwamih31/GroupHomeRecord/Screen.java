@@ -377,10 +377,10 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		return border;
 	}
 
-
+	//はい か いいえ の選択用部品
 	static void que() {
 
-		labelC = labelSet(tex);
+		labelC = labelSet(tex);//質問
 
 		JPanel bPanel = new JPanel();
 		format(bPanel, 100, 500);
@@ -458,7 +458,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 			case 0 ://最初
 				if (buttonName.equals(ynList[0])) {
 
-					load();
 					tableData = new TableData();
 					toNormal();
 				}
@@ -605,9 +604,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
-	private void load() {
-		Main.load();
-	}
 
 	void prologue() {
 
@@ -636,7 +632,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		setMode(1);/////////////////////////////////////通常モードへ
 		TableData.allUser();
 		data();
-		Main.save();
+
 		setMessage("どうしますか?");
 		normal();
 		targetTableName = TableData.getTableName();
@@ -688,7 +684,8 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		if (selectButtonName.equals(menu[3])) {//事業所情報
 
-			rewriteUser();
+//			officeInfo();
+
 			toNormal();
 		}
 
@@ -1755,23 +1752,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	}
 
-	private void adventure() {
-
-		System.out.println("");//////////////////////////////////////////
-		System.out.println("adventure() します");//////////////////////////////
-		System.out.println("");//////////////////////////////////////////
-
-		buttonName = null;
-
-		officeStatus();
-		info("", "", "");
-		scene();
-		menu(Command.menu());
-		comment();
-
-		change();
-
-	}
 
 	private void user() {
 
@@ -1841,9 +1821,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			recordingJ();
 
-			Main.action(4);
-
-			setMode(4);
 
 			journal();
 
