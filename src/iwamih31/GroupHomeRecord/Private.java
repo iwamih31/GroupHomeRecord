@@ -3,7 +3,7 @@ package iwamih31.GroupHomeRecord;
 import javax.swing.table.AbstractTableModel;
 
 public class Private extends AbstractTableModel{
-	
+
 	private static Object[][] list;
 	private static String[] columns;
 	private static String name;
@@ -31,7 +31,7 @@ public class Private extends AbstractTableModel{
 		name = String.valueOf(selectName);
 
 		tableName = tableName();
-		
+
 		numberName = "番号";
 
 		date = selectDate;
@@ -41,7 +41,7 @@ public class Private extends AbstractTableModel{
 		columns = new String[]{ "部屋番号", "氏名", "日付", "時間", "睡眠", "水分", "排尿1", "排尿2", "排便", "下剤", "服薬", "処置", "様子" };
 
 		ascColumn = columns[3];
-		
+
 		rule = new String[columns.length];
 
 		String ruleVar = "varchar(20) DEFAULT ''";
@@ -61,56 +61,56 @@ public class Private extends AbstractTableModel{
 		ColumnRule = new String[2][columns.length];
 		ColumnRule[0] = columns;
 		ColumnRule[1] = rule;
-		
+
 		listStart = 3;// リスト取り入れスタート値
 
 		list = new Object[times.length][columns.length - listStart];
 
 		width = new int[list[0].length];
-		width[0] = 60;
-		width[1] = 50;
-		width[2] = 50;
-		width[3] = 50;
-		width[4] = 50;
-		width[5] = 50;
-		width[6] = 50;
-		width[7] = 50;
-		width[8] = 50;
-		width[9] = 500;
+		width[0] = 6;
+		width[1] = 5;
+		width[2] = 5;
+		width[3] = 5;
+		width[4] = 5;
+		width[5] = 5;
+		width[6] = 5;
+		width[7] = 5;
+		width[8] = 5;
+		width[9] = 50;
 
 		  // DB作成( DBファイル名[アドレス], テーブル名, 行名&定義[二次元配列で],並べ替え基準行名,自動采番行名 )
 		dbc = new DerbyC(uri, tableName, ColumnRule, ascColumn, numberName);
-		
+
 		System.out.println("");////////////////////////
 		System.out.println(tableName + "の" + columns[2] + "列に" + date + "が在るか調べます");///
 		System.out.println("");////////////////////////
-		
+
 		int rowSize = size(tableName,columns[2],date);
 
 		if (rowSize < 1){
-			
+
 			System.out.println("");//////////////////////////////////////
 			System.out.println(date + "のデータが無いので作成します");///
 			System.out.println("");//////////////////////////////////////
-			
+
 			insertBlank(selectRoom, name,date);
-			
+
 		}else{
-			
+
 			System.out.println("");///////////////////////////////////////////////
 			System.out.println(date + "のデータは " + rowSize + "行 存在します");///
 			System.out.println("");///////////////////////////////////////////////
 		}
-		
+
 
 		Object[][] data =  data(selectRoom, selectName, selectDate);
-		
+
 		for (int i = 0; i < list.length; i++) {
 			for (int j = 0; j < list[0].length; j++) {
 				list[i][j] = data[i][j + listStart];
 			}
 		}
-		
+
 //		for (int i = 0; i < times.length; i++) {
 //
 //			time = times[i];
@@ -121,16 +121,16 @@ public class Private extends AbstractTableModel{
 	}
 
 	static Object[][] data(Object selectRoom, Object selectName, Object selectDate) {
-		
+
 		Object[] whereColumnList = new Object[]{columns[0],columns[1],columns[2]};
 		Object[] whereDataList = new Object[]{selectRoom,selectName, selectDate};
-		
+
 //		String listColumns = columns[3];
 //		for (int i = 4; i < columns.length; i++) {
 //			listColumns = listColumns + ", " + columns[i];
 //		}
 		String sql = DerbyC.whereAsc(whereColumnList, whereDataList, ascColumn);
-		
+
 		return DerbyC.minusNumList(tableName(), sql);
 	}
 
@@ -139,17 +139,17 @@ public class Private extends AbstractTableModel{
 		System.out.println("");////////////////////////
 		System.out.println("Private.times()します");///
 		System.out.println("");////////////////////////
-		
+
 		times = new Object[48];
 		String hour;
 
 		for (int i = 0; i < times.length / 2; i++) {
-			
+
 			System.out.print("＜ hour " + i + " ＞ ");///
 			hour = TableData.digit(i, 2);
 			times[i * 2] = hour + ":00";
 			times[i * 2 + 1] = hour + ":30";
-			
+
 			System.out.println("times[" + (i * 2) + "] = " + times[i * 2] + ", " + "times[" + (i * 2 + 1) + "] = " + times[i * 2 + 1]);///
 			System.out.println("");////////////////////////
 		}
@@ -174,9 +174,9 @@ public class Private extends AbstractTableModel{
 	}
 
 	public static Object[] selectlist(int listNumber) {
-		
+
 		Object[] returnList;
-		
+
 		switch (listNumber) {
 			case 0 :
 				returnList = new Object[]{};
@@ -269,9 +269,9 @@ public class Private extends AbstractTableModel{
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		
+
 		boolean isCellEditable = true;
-		
+
 		if(columnIndex == 0){
 			isCellEditable = false;
 		}
@@ -282,7 +282,7 @@ public class Private extends AbstractTableModel{
 	public void setValueAt(Object val, int rowIndex, int columnIndex) {
 		list[rowIndex][columnIndex] = val;
 		fireTableCellUpdated(rowIndex, columnIndex);
-		
+
 		System.out.println("");/////////////////////////////////////////////////////
 		System.out.println("list[" + rowIndex + "][" + columnIndex + "] = " + list[rowIndex][columnIndex] + " です");///
 		System.out.println("");/////////////////////////////////////////////////////

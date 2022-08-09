@@ -31,8 +31,6 @@ public class Main extends AbstractTableModel implements Serializable{
 
 	private static String[] text;
 
-	private static Talk tal;
-
 	private static String[] columns;
 
 	private static String[] data;
@@ -203,14 +201,6 @@ public class Main extends AbstractTableModel implements Serializable{
 	}
 
 	public static void setLp(int lp) {
-	}
-
-	public static void setTal(Talk tal) {
-		Main.tal = tal;
-	}
-
-	public static Talk getTal() {
-		return tal;
 	}
 
 

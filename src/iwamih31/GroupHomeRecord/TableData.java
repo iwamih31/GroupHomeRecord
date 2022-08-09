@@ -71,15 +71,15 @@ public class TableData extends AbstractTableModel implements Serializable {
 		columns[8] = "備考";
 
 		width = new int[columns.length];
-		width[0] = 80;
-		width[1] = 120;
-		width[2] = 130;
-		width[3] = 50;
-		width[4] = 130;
-		width[5] = 80;
-		width[6] = 130;
-		width[7] = 130;
-		width[8] = 200;
+		width[0] = 5;
+		width[1] = 12;
+		width[2] = 11;
+		width[3] = 5;
+		width[4] = 11;
+		width[5] = 8;
+		width[6] = 11;
+		width[7] = 11;
+		width[8] = 20;
 
 //		newRow = Goods.getNewRow();
 
@@ -119,7 +119,7 @@ public class TableData extends AbstractTableModel implements Serializable {
 		dbc = new DerbyC(uri, tableName, ColumnRule, ascColumn, numberName);
 
 //		data = new Object[1][columns.length];//仮のデータ
-		
+
 		data = allUser();
 	}
 
@@ -645,17 +645,17 @@ public class TableData extends AbstractTableModel implements Serializable {
 	}
 
 	public static Object[] distinctList(Object setTableName, String distinctColumn, String orderColumn) {
-	
+
 		return distinctList(setTableName, distinctColumn, "", orderColumn);
-	
+
 	}
 
 	public static Object[] distinctList(Object setTableName, String distinctColumn, String whereSql, String orderColumn) {
-		
+
 		Object[][] distinctData = DerbyC.distinctList(setTableName, distinctColumn, whereSql, orderColumn);
 
 		Object[] tableColumns = DerbyC.columnsAll(setTableName);
-		
+
 		int columnI = 0;//列番号
 		/////選んだ列が何番目か判定し、列番号(columnI)に代入
 		for (int i = 0; i < distinctData[0].length; i++) {
@@ -668,7 +668,7 @@ public class TableData extends AbstractTableModel implements Serializable {
 		}
 		return itemData;
 	}
-	
+
 	static String listName() {
 
 		listName = (selectName + asc);
@@ -718,7 +718,7 @@ public class TableData extends AbstractTableModel implements Serializable {
 			String start = dateJPN(st);
 
 			int judge = -1;
-			
+
 			while (judge < 0) {
 				inp = date("認定終了", st / 10000 + 8);
 				if (inp < 0){
@@ -739,7 +739,7 @@ public class TableData extends AbstractTableModel implements Serializable {
 			setRowData = new Object[]{ roomNumber, inpName, birth, age, moveIn, level, start, period, note };
 
 			returnData = Arrays.copyOf(setRowData, setRowData.length);
-			
+
 			System.out.println("");//////////////
 			System.out.print("setRowData = ");///
 			for (Object object : setRowData) {///
@@ -805,7 +805,7 @@ public class TableData extends AbstractTableModel implements Serializable {
 		Object[] setRowData = null;
 
 		Object[] returnData = null;
-		
+
 		while (setRowData == null) {
 
 			int inp;
@@ -881,7 +881,7 @@ public class TableData extends AbstractTableModel implements Serializable {
 
 
 			setRowData = new Object[]{ selectRowData[0], inpName, birth, age, moveIn, level, start, period, note };
-			
+
 			returnData = Arrays.copyOf(setRowData, setRowData.length);
 
 			System.out.println("");//////////////
