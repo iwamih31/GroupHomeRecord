@@ -137,13 +137,16 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 	public Screen(String s) {
 		super(s);
 		start(s);
+		outer();
 	}
 
+//	初期設定
 	private void start(String s) {
+//		ディスプレイサイズを基準に、横1％、縦1％、フォントサイズを決定
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        w = screenSize.width;
-        h = screenSize.height;
-        fontSize = w/100;
+        w = screenSize.width / 100;
+        h = screenSize.height / 100;
+        fontSize = w;
 		setMode(0);
 		border = new LineBorder(Color.WHITE, 2, true);
 		ynList = new Object[]{ "はい", "いいえ" };
@@ -178,7 +181,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		selectDate = today();
 
-		outer();
 	}
 
 	private static JLabel b() {
@@ -283,7 +285,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		}
 		frame = new JFrame("介護記録");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(w, h);
+		frame.setSize(w*100, h*100);
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setLayout(new FlowLayout());
 
@@ -306,6 +308,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	}
 
+//	changePanelSetの表示カード書き換え
 	private static void change(String mode) {
 
 		cardLayout.removeLayoutComponent(panelSet);
@@ -313,17 +316,20 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		cardLayout.show(changePanelSet, mode);
 	}
 
-	private static void change() {
 
+//	panelSet更新後表示カード書き換え
+	private static void change() {
 		panelSet();
 		change("通常");
 	}
 
 	private static JPanel panelSet() {
 
+		panelN.setPreferredSize(new Dimension(w*70, h*13));
+
 		JPanel panelSetC = new JPanel();
 		format(panelSetC);
-		panelSetC.setPreferredSize(new Dimension(w/10*7, h/4*3));
+		panelSetC.setPreferredSize(new Dimension(w*70, h*80));
 		panelSetC.setLayout(new BoxLayout(panelSetC, BoxLayout.Y_AXIS));
 		panelSetC.add(panelN);
 		panelSetC.add(panelC);
@@ -419,7 +425,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		JPanel panel = new JPanel();
 		format(panel);
 		panel.setLayout(new GridLayout(5, 0, 0, 0));
-		panel.setPreferredSize(new Dimension(w/10, h/8*4));
+		panel.setPreferredSize(new Dimension(w*10, h*50));
 
 		JButton[] button = new JButton[mList.length];// /////////////////ボタンの数
 
@@ -443,11 +449,11 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		jButton.addActionListener(this);
 		jButton.addKeyListener(this);
 		jButton.setBorder(border());
-		jButton.setPreferredSize(new Dimension(w/10, h/8*1));
+		jButton.setPreferredSize(new Dimension(w*10, h*13));
 //			panel.add(jButton);
 
 		JPanel bPanel = panelSetNCS(panel, menuAreaB, jButton);
-		bPanel.setPreferredSize(new Dimension(w/10, h/8*6));
+		bPanel.setPreferredSize(new Dimension(w*10, h*80));
 
 		panelE = panelSetWCE(null, bPanel, null);
 
@@ -2259,7 +2265,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		oTab.setRowHeight(fontSize*2);
 		oTab.setShowVerticalLines(true);// 縦枠
 		oTab.setShowHorizontalLines(true);// 横枠
-		oTab.setPreferredSize(new Dimension(w/3*2, h/14));
+		oTab.setPreferredSize(new Dimension(w*70, h*8));
 		oTab.setBorder(border());
 
 		DefaultTableCellRenderer tableCellRendererC = new DefaultTableCellRenderer();
@@ -2293,7 +2299,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		tableModel = tableData;
 		table.setModel(tableModel);
 		//		table.setAutoCreateRowSorter(true);
-		table.setRowHeight(fontSize * 3);
+		table.setRowHeight(fontSize * 2);
 		table.setShowVerticalLines(true);// 縦枠
 		table.setShowHorizontalLines(false);// 横枠
 //		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
@@ -2313,10 +2319,10 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.getViewport().setBackground(Color.BLACK);
-		scrollPane.setPreferredSize(new Dimension(w/3*2, h/10));
+		scrollPane.setPreferredSize(new Dimension(w*70, h*8));
 		scrollPane.setBorder(border());
 
-		setColumnHeaderHeight(scrollPane, fontSize * 2);
+		setColumnHeaderHeight(scrollPane, fontSize / 2 * 3);
 
 //		scrollPane.setColumnHeader(new JViewport() {///JViewport#getPreferredSize()をオーバーライド
 //
@@ -2395,7 +2401,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		pTab.setRowHeight(fontSize * 2);
 		pTab.setShowVerticalLines(false);// 縦枠
 		pTab.setShowHorizontalLines(false);// 横枠
-//		pTab.setPreferredSize(new Dimension(w/4, pTab.getRowCount() * fontSize));
+//		pTab.setPreferredSize(new Dimension(w*25, pTab.getRowCount() * fontSize));
 
 		DefaultTableCellRenderer tableCellRendererC = new DefaultTableCellRenderer();
 		tableCellRendererC.setHorizontalAlignment(JLabel.LEFT);
@@ -2415,7 +2421,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		JPanel panel = panelSetUD(tName, panelT);
 		format(panel);
 		panel.setBorder(border());
-		panel.setPreferredSize(new Dimension(w/9, (pTab.getRowCount()+1) * fontSize * 2 - 4));
+		panel.setPreferredSize(new Dimension(w*13, (pTab.getRowCount()+1) * fontSize * 2 - 4));
 
 		return panel;
 
@@ -2433,7 +2439,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		JPanel infoPanel = panelSetTMB(top, middle, bottom);
 		format(infoPanel);
-		infoPanel.setPreferredSize(new Dimension(w/8, h/8*6));
+		infoPanel.setPreferredSize(new Dimension(w*13, h*80));
 		panelW = panelSetNCS(infoPanel, null, null);
 
 	}
@@ -2496,7 +2502,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.getViewport().setBackground(Color.BLACK);
-		scrollPane.setPreferredSize(new Dimension(w/3*2, h/3*2));
+		scrollPane.setPreferredSize(new Dimension(w*70, h*70));
 		scrollPane.setBorder(border());
 
 		setColumnHeaderHeight(scrollPane, fontSize * 2);
@@ -2580,7 +2586,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		scrollPane.setPreferredSize(new Dimension(890, 430));
 		scrollPane.setBorder(border());
 
-		setColumnHeaderHeight(scrollPane, 25);
+		setColumnHeaderHeight(scrollPane, fontSize * 2);
 
 		DefaultTableCellRenderer tableCellRendererC = new DefaultTableCellRenderer();
 		tableCellRendererC.setHorizontalAlignment(JLabel.CENTER);
@@ -2716,7 +2722,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		scrollPane.setPreferredSize(new Dimension(890, 430));
 		scrollPane.setBorder(border());
 
-		setColumnHeaderHeight(scrollPane, 25);
+		setColumnHeaderHeight(scrollPane, fontSize * 2);
 
 		tableColumnFormE(table);
 
@@ -2769,7 +2775,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			JScrollPane scrollPane = new JScrollPane(table);
 			scrollPane.getViewport().setBackground(Color.BLACK);
-			scrollPane.setPreferredSize(new Dimension(w/3*2, h/3*2));
+			scrollPane.setPreferredSize(new Dimension(w*70, h*70));
 
 			setColumnHeaderHeight(scrollPane, fontSize * 2);
 
@@ -2797,10 +2803,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 //			}
 
 			format(table.getTableHeader());
-
-			JPanel panel = panelSetNCS(null, scrollPane, null);
-			format(panel);
-			panel.setBorder(border());
 
 			panelC = panelSetNCS(centerAreaB(), scrollPane, centerAreaB());
 
