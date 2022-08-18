@@ -42,7 +42,6 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-@SuppressWarnings("serial")
 public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	JLabel ansLabel;
@@ -89,6 +88,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 	private Object[] insertRowData;
 	private Object selectRoom;
 	private Object[] cutOutData;
+	private OfficeInfo officeInfo;
 	private static int w;
 	private static int h;
 	private static JTable selectJTable;
@@ -473,6 +473,9 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 			case 0 ://最初
 				if (buttonName.equals(ynList[0])) {
 
+//					Main.save();
+					Main.load();
+
 					tableData = new TableData();
 					toNormal();
 				}
@@ -480,6 +483,8 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 					begin();
 					opening();
+
+					Main.save();
 
 				} else {
 					opening();
@@ -506,9 +511,11 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			case 4 ://事業所情報
 
+				count = 0;
+				officeAction(buttonName);
 				break;
 
-			case 5 ://
+			case 5 ://データ変更
 
 				break;
 
@@ -551,7 +558,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 				String bN = (String) bList[i];
 				button[i] = new JButton(bN);
 				format(button[i], 20, 10);
-	//				button[i].setMargin(new Insets(20, 10, 20, 10));///////文字周りの幅
+//				button[i].setMargin(new Insets(20, 10, 20, 10));///////文字周りの幅
 				button[i].setFocusPainted(false);
 				button[i].addActionListener(this);
 				button[i].addKeyListener(this);
@@ -699,7 +706,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		if (selectButtonName.equals(menu[3])) {//事業所情報
 
-//			officeInfo();
+			office();
 
 			toNormal();
 		}
@@ -1065,6 +1072,106 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 			redo();
 		}
 	}
+
+	private void office() {
+		// TODO 自動生成されたメソッド・スタブ
+		setMode(3);
+
+		officeInfo = new OfficeInfo();
+
+		officeInfo();
+
+		targetTableName = OfficeInfo.getTableName();
+
+		beforeData = tableData(tableModel);
+
+	}
+
+	private void officeInfo() {
+		// TODO 自動生成されたメソッド・スタブ
+		System.out.println("");//////////////////////////////////////////
+		System.out.println("officeInfo() します");//////////////////////////
+		System.out.println("");//////////////////////////////////////////
+
+		buttonName = null;
+
+		officeStatus();
+		info(dateInfo(), timeInfo(), toDoInfo());
+		centerTableE(officeInfo,officeInfo.getWidth());
+		menu = new String[]{"ST変更", "住所変更", "TEL変更", "FAX変更", "メール変更"};
+		menu(menu);
+		comment("⇒選択しで下さい");
+		change();
+
+	}
+
+
+	private void officeAction(String selectButtonName) {//事業所情報
+
+		System.out.println("");//////////////////////////////////////////
+		System.out.println("officeAction(" + selectButtonName + ") します");////////
+		System.out.println("");//////////////////////////////////////////
+
+		if (selectButtonName.equals(menu[0])) {//ST変更
+
+			recording();
+
+			toNormal();
+		}
+
+		if (selectButtonName.equals(menu[1])) {//住所変更
+
+			recording();
+
+			Event.selectMonth();
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[2])) {//TEL変更
+
+			recording();
+
+			Event.entry();
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[3])) {//FAX変更
+
+			recording();
+
+			Event.rewriteData(selectRowData());
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[4])) {//メール変更
+
+			recording();
+
+			removeRow();
+
+			event();
+		}
+
+		if (selectButtonName.equals(cancel)) {
+
+			recording();
+
+			toNormal();
+		}
+
+		if (selectButtonName.equals(undo)) {
+			undo();
+		}
+
+		if (selectButtonName.equals(redo)) {
+			redo();
+		}
+	}
+
+
 
 	private void undo() {
 
@@ -3295,6 +3402,136 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	public void setSelectDay(String selectDate) {
 		Screen.selectDate = selectDate;
+	}
+
+	private void eventAction(String selectButtonName) {//行事予定表
+
+		System.out.println("");//////////////////////////////////////////
+		System.out.println("eventAction(" + selectButtonName + ") します");////////
+		System.out.println("");//////////////////////////////////////////
+
+		if (selectButtonName.equals(menu[0])) {//利用者選択
+
+			recording();
+
+			toNormal();
+		}
+
+		if (selectButtonName.equals(menu[1])) {//月選択
+
+			recording();
+
+			Event.selectMonth();
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[2])) {//行事入力
+
+			recording();
+
+			Event.entry();
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[3])) {//行事変更
+
+			recording();
+
+			Event.rewriteData(selectRowData());
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[4])) {//行事削除
+
+			recording();
+
+			removeRow();
+
+			event();
+		}
+
+		if (selectButtonName.equals(cancel)) {
+
+			recording();
+
+			toNormal();
+		}
+
+		if (selectButtonName.equals(undo)) {
+			undo();
+		}
+
+		if (selectButtonName.equals(redo)) {
+			redo();
+		}
+	}
+
+	private void eventAction(String selectButtonName) {//行事予定表
+
+		System.out.println("");//////////////////////////////////////////
+		System.out.println("eventAction(" + selectButtonName + ") します");////////
+		System.out.println("");//////////////////////////////////////////
+
+		if (selectButtonName.equals(menu[0])) {//利用者選択
+
+			recording();
+
+			toNormal();
+		}
+
+		if (selectButtonName.equals(menu[1])) {//月選択
+
+			recording();
+
+			Event.selectMonth();
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[2])) {//行事入力
+
+			recording();
+
+			Event.entry();
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[3])) {//行事変更
+
+			recording();
+
+			Event.rewriteData(selectRowData());
+
+			event();
+		}
+
+		if (selectButtonName.equals(menu[4])) {//行事削除
+
+			recording();
+
+			removeRow();
+
+			event();
+		}
+
+		if (selectButtonName.equals(cancel)) {
+
+			recording();
+
+			toNormal();
+		}
+
+		if (selectButtonName.equals(undo)) {
+			undo();
+		}
+
+		if (selectButtonName.equals(redo)) {
+			redo();
+		}
 	}
 
 	public static String getSelectDay() {

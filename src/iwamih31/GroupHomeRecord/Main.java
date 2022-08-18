@@ -4,7 +4,12 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -18,8 +23,6 @@ public class Main extends AbstractTableModel implements Serializable{
 	private static String officeName = "Care office";
 
 	private static String name = officeName;
-
-	static Main mai;
 
 	private static Screen sc;
 
@@ -41,8 +44,6 @@ public class Main extends AbstractTableModel implements Serializable{
 
 
 	public static void main(String[] args) {///////////////////スタート
-
-		mai = new Main();///////////////////////////////////////////////////
 
 		columns = new String[3];
 		columns[0] = "事業所名";
@@ -95,10 +96,56 @@ public class Main extends AbstractTableModel implements Serializable{
 
 			name = officeName;
 
-			new ArrayList<String>();
-
 			System.out.println("");
 			System.out.println("  ・・・");
+	}
+
+	static void save() {
+		try {
+			ObjectOutputStream sData = new ObjectOutputStream(new FileOutputStream(saveFile));
+
+			sData.writeObject(officeName);
+
+			sData.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.getMessage();
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.getMessage();
+			e.printStackTrace();
+		}
+
+	}
+
+
+	static void load() {
+
+		try {
+			ObjectInputStream sData = new ObjectInputStream(new FileInputStream(saveFile));
+
+			officeName = ""+ sData.readObject();
+
+			sData.close();
+
+			name = "" + officeName;
+
+
+		} catch (FileNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.getMessage();
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.getMessage();
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.getMessage();
+			e.printStackTrace();
+		}
 	}
 
 
@@ -114,6 +161,8 @@ public class Main extends AbstractTableModel implements Serializable{
 			}
 		}
 	}
+
+
 
 	public static void setName(String name) {
 		Main.name = name;
