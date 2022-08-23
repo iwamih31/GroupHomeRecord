@@ -24,7 +24,7 @@ public class OfficeInfo extends AbstractTableModel{
 
 		uri = TableData.getUri();
 
-		tableName = "routine";
+		tableName = "officeinfo";
 
 		numberName = "番号";
 
@@ -58,8 +58,8 @@ public class OfficeInfo extends AbstractTableModel{
 		list = createlist();
 
 		width = new int[list[0].length];
-		width[0] = 60;
-		width[1] = 650;
+		width[0] = 300;
+		width[1] = 1000;
 	}
 
 	public static Object[][] createlist() {

@@ -707,8 +707,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		if (selectButtonName.equals(menu[3])) {//事業所情報
 
 			office();
-
-			toNormal();
 		}
 
 		if (selectButtonName.equals(menu[4])) {//データ変更
@@ -1075,7 +1073,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	private void office() {
 		// TODO 自動生成されたメソッド・スタブ
-		setMode(3);
+		setMode(4);
 
 		officeInfo = new OfficeInfo();
 
@@ -1123,7 +1121,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			recording();
 
-			Event.selectMonth();
+//			Event.selectMonth();
 
 			event();
 		}
@@ -1132,7 +1130,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			recording();
 
-			Event.entry();
+//			Event.entry();
 
 			event();
 		}
@@ -1141,7 +1139,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			recording();
 
-			Event.rewriteData(selectRowData());
+//			Event.rewriteData(selectRowData());
 
 			event();
 		}
@@ -1150,7 +1148,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 			recording();
 
-			removeRow();
+//			removeRow();
 
 			event();
 		}
@@ -3402,136 +3400,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	public void setSelectDay(String selectDate) {
 		Screen.selectDate = selectDate;
-	}
-
-	private void eventAction(String selectButtonName) {//行事予定表
-
-		System.out.println("");//////////////////////////////////////////
-		System.out.println("eventAction(" + selectButtonName + ") します");////////
-		System.out.println("");//////////////////////////////////////////
-
-		if (selectButtonName.equals(menu[0])) {//利用者選択
-
-			recording();
-
-			toNormal();
-		}
-
-		if (selectButtonName.equals(menu[1])) {//月選択
-
-			recording();
-
-			Event.selectMonth();
-
-			event();
-		}
-
-		if (selectButtonName.equals(menu[2])) {//行事入力
-
-			recording();
-
-			Event.entry();
-
-			event();
-		}
-
-		if (selectButtonName.equals(menu[3])) {//行事変更
-
-			recording();
-
-			Event.rewriteData(selectRowData());
-
-			event();
-		}
-
-		if (selectButtonName.equals(menu[4])) {//行事削除
-
-			recording();
-
-			removeRow();
-
-			event();
-		}
-
-		if (selectButtonName.equals(cancel)) {
-
-			recording();
-
-			toNormal();
-		}
-
-		if (selectButtonName.equals(undo)) {
-			undo();
-		}
-
-		if (selectButtonName.equals(redo)) {
-			redo();
-		}
-	}
-
-	private void eventAction(String selectButtonName) {//行事予定表
-
-		System.out.println("");//////////////////////////////////////////
-		System.out.println("eventAction(" + selectButtonName + ") します");////////
-		System.out.println("");//////////////////////////////////////////
-
-		if (selectButtonName.equals(menu[0])) {//利用者選択
-
-			recording();
-
-			toNormal();
-		}
-
-		if (selectButtonName.equals(menu[1])) {//月選択
-
-			recording();
-
-			Event.selectMonth();
-
-			event();
-		}
-
-		if (selectButtonName.equals(menu[2])) {//行事入力
-
-			recording();
-
-			Event.entry();
-
-			event();
-		}
-
-		if (selectButtonName.equals(menu[3])) {//行事変更
-
-			recording();
-
-			Event.rewriteData(selectRowData());
-
-			event();
-		}
-
-		if (selectButtonName.equals(menu[4])) {//行事削除
-
-			recording();
-
-			removeRow();
-
-			event();
-		}
-
-		if (selectButtonName.equals(cancel)) {
-
-			recording();
-
-			toNormal();
-		}
-
-		if (selectButtonName.equals(undo)) {
-			undo();
-		}
-
-		if (selectButtonName.equals(redo)) {
-			redo();
-		}
 	}
 
 	public static String getSelectDay() {
