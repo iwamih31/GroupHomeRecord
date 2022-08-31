@@ -10,7 +10,6 @@ public class OfficeInfo extends AbstractTableModel{
 	private String uri = TableData.getUri();
 	private String[] rule;
 	private String[][] columnRule;
-	private DerbyC dbc;
 	private String ascColumn;
 	private String numberName;
 	private static Object tableName = "officeinfo";
@@ -52,8 +51,7 @@ public class OfficeInfo extends AbstractTableModel{
 
 		ascColumn = columns[0];
 
-		  // DB作成( DBファイル名[アドレス], テーブル名, 行名&定義[二次元配列で],並べ替え基準行名,自動采番行名 )
-		dbc = new DerbyC(uri, tableName, columnRule, ascColumn, numberName);
+		  new DerbyC(uri, tableName, columnRule, ascColumn, numberName);
 
 		list = createlist();
 
@@ -78,7 +76,7 @@ public class OfficeInfo extends AbstractTableModel{
 	}
 
 	static Object[][] data() {
-		return DerbyC.ascDataList(tableName, columns[0]);
+		return DerbyC.ascDataList(tableName, columns[0]  + " DESC ");
 	}
 
 	static Object[] selectList() {
@@ -87,14 +85,11 @@ public class OfficeInfo extends AbstractTableModel{
 		return DerbyC.switchQueues(DerbyC.dataList(selectColumn, tableName, "", columns[0]))[0];
 	}
 
-	private int sizeLike(Object tableName, Object whereColumn, Object whereData) {
-		return DerbyC.sizeLike(tableName, whereColumn, whereData);
-	}
 
 	public static Object[] entry(){
 
 		System.out.println("");////////////////////////////////////////
-		System.out.println("Routine.entry() します");////////////////////
+		System.out.println("OfficeInfo.entry() します");////////////////////
 		System.out.println("");////////////////////////////////////////
 
 		Object[] setRowData = null;
@@ -103,16 +98,14 @@ public class OfficeInfo extends AbstractTableModel{
 
 		while (setRowData == null) {
 
-			String rTime = TableData.time("開始");
-			if (rTime == null) break;
 
-			String rName = TableData.inputData(tableName, columns[1]);
+			String rName = TableData.inputData(tableName, columns[0]);
 			if (rName == null) break;
 
-			String rDetail = TableData.inputData(tableName, columns[2]);
+			String rDetail = TableData.inputData(tableName, columns[1]);
 			if (rDetail == null) break;
 
-			setRowData = new Object[]{rTime, rName, rDetail};
+			setRowData = new Object[]{rName, rDetail};
 
 			returnData = Arrays.copyOf(setRowData, setRowData.length);
 

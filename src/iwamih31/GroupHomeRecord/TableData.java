@@ -123,41 +123,6 @@ public class TableData extends AbstractTableModel implements Serializable {
 		data = allUser();
 	}
 
-//	void branch(Object[] phraseSet) {
-//
-//		System.out.println("");////////////////////////////////////
-//		System.out.println("branch(Object[] phraseSet) します");///
-//		System.out.println("");////////////////////////////////////
-//
-//		for (int i = 0; i < phraseSet.length; i++) {
-//
-//			Object[] sortArray = arraySort(phraseSet, i);
-//
-//			if (size(wherePhrase(phraseSet[i])) == 0) {
-//
-//				dataSet(sortArray);
-//
-//			} else {
-//
-//				//phraseSet[i]に利益度をプラス
-//				System.out.println("");////////////////////////////////////
-//				System.out.println(phraseSet[i] + " の利益度を + (" + Main.getLp() + ") します");///
-//				System.out.println("");////////////////////////////////////
-//
-//				int newGain = (Integer) data(columns[1], wherePhrase(phraseSet[i])) + Main.getLp();
-//				update(columns[1],newGain,columns[0], phraseSet[i]);
-//
-//				//他の会話と紐付けする
-//				for (int j = 1; j < sortArray.length; j++) {
-//
-//					if( search(wherePhrase(phraseSet[i]), sortArray[j]) == false){//紐付けに無い場合
-//
-//						addTie(phraseSet[i],sortArray[j]);//紐付けの最初に追加
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	public void start() {
 
@@ -193,39 +158,6 @@ public class TableData extends AbstractTableModel implements Serializable {
 		return array;
 	}
 
-//	void dataSet(Object[] phraseSet) {
-//
-//		Object[] data = new Object[columns.length];/////insertData作成
-//		data[0] = phraseSet[0];
-//		data[1] = Main.getLp();
-//
-//		for (int i = 1; i < phraseSet.length; i++) {
-//			data[i + 1] =  phraseSet[i];
-//		}
-//		for (int i = 0; i < data.length; i++) {
-//			if (data[i] == null) {
-//				data[i] = " ";
-//			}
-//		}
-//
-//
-//		String da = "";/////////////////////////// da(data表示用文字列)セット
-//		for (int i = 0; i < data.length -1; i++) {
-//			da = da + ( data[i] + ", " );
-//		}
-//		da =  da + ( data[data.length-1] );
-//
-//		System.out.println("");////////////////////////////////////
-//		System.out.print(tableName+" に "+ da +" を挿入します");///
-//		System.out.println("");////////////////////////////////////
-//
-//		  // 1行目を挿入
-//		insert(data);
-//
-//		System.out.println("");////////////////////////////////////
-//		System.out.println("DBデータ数" + size(""));///////////////
-//		System.out.println("");////////////////////////////////////
-//	}
 
 	private boolean search(Object whereTargetRow, Object searchData) {
 
@@ -277,46 +209,6 @@ public class TableData extends AbstractTableModel implements Serializable {
 		}
 	}
 
-//	public void reply(String[] phraseSet) {
-//
-//		System.out.println("");////////////////////////////////////////////////////////
-//		System.out.println("reply(String[] phraseSet) します");///
-//		System.out.println("");////////////////////////////////////////////////////////
-//
-//		textSet = new ArrayList<String>();
-//		int likeLine = 10;
-//		int gain = 0;
-//		String reply;
-//
-//		for (String phrase : phraseSet) {
-//
-//			if(size(wherePhrase(phrase)) > 0){
-//
-//			gain = (Integer) data(columns[1], wherePhrase(phrase));
-//
-//			}
-//
-//			if (gain > likeLine) {
-//				setHp(getHp() + 1);
-//			}
-//
-//			if (gain < likeLine) {
-//				setHp(getHp() - 1);
-//			}
-//
-//			if (gain > 1) {//////////////////////////
-//				int tie = randomTie();
-//				reply = (String) data(columns[tie], wherePhrase(phrase));
-//				if(reply == null) reply = "";
-//				textSet.add(reply);
-//			}
-//		}
-//		text = "・・・";
-//		for (String phrase : textSet) {
-//			text = text + phrase;
-//		}
-//		text = text + "。";
-//	}
 
 	public void feelSet(int point) {
 
@@ -479,108 +371,6 @@ public class TableData extends AbstractTableModel implements Serializable {
 		DerbyC.delete(tableName, columnName, data);
 	}
 
-//	public static void delete() {
-
-//		DerbyC.delete(DerbyC.sqlSection(), Monitor.selectRow() + 1);
-//
-//		initial();
-//
-//	}
-//
-//	public static  Object[][] select() {
-//
-////		selectData = DerbyC.dataList("");//////////serect用データ
-//
-//		Object[][] r = null;
-//
-//		while (r == null) {
-//
-//			String columnName = (String) Monitor.selectD("何を選びますか？",columns);
-//			if(columnName == null){
-//				selectName ="";
-//				DerbyC.setWhereColumnData(selectName);
-//				DerbyC.sqlSection();
-//				dataList(numberName);
-//				Monitor.display.setText(listName());
-//				break;
-//			}
-//
-//			Object[] itemData = distinctList(columnName," ORDER BY " + columnName);
-//
-//			Object dataName = Monitor.selectD("どれを選びますか？",itemData);
-//			if(dataName == null){
-//				selectName ="";
-//				DerbyC.setWhereColumnData(selectName);
-//				DerbyC.sqlSection();
-//				dataList(numberName);
-//				Monitor.display.setText(listName());
-//				break;
-//			}
-//
-//			selectName = (columnName + " [ " + dataName + " ] 一覧");
-//
-//			Monitor.display.setText(listName());
-//
-//			r = DerbyC.selection(columnName,dataName);
-//
-//			dataList();
-//
-//		}
-//		return r;
-//
-//	}
-
-//	public static Object[][] sort() {
-//		Object[][] r = null;
-//
-//		while (r == null) {
-//
-//			Object columnName = Monitor.selectD("どの行でソートしますか？", columns);
-//			if (columnName == null) {
-//				orderBy = (" ORDER BY " + numberName);
-//				DerbyC.setOrderAscColumn(orderBy);
-//				DerbyC.sqlSection();
-//				dataList();
-//				break;
-//			}
-//
-//			Object ascName = Monitor.selectD("どの順番でソートしますか？", ascData);
-//			if (ascName == null) {
-//				orderBy = (" ORDER BY " + numberName);
-//				DerbyC.setOrderAscColumn(orderBy);
-//				DerbyC.sqlSection();
-//				dataList();
-//				break;
-//			}
-//
-//			if (ascName.equals(ascData[0])) {/////昇順の場合
-//
-//				ascColumn = (String) columnName;
-//				orderBy = (" ORDER BY " + ascColumn);
-//
-//			}
-//
-//			if (ascName.equals(ascData[1])) {/////降順の場合
-//
-//				ascColumn = (String) columnName;
-//				orderBy = (" ORDER BY " + ascColumn + " DESC");
-//			}
-//
-//			DerbyC.setOrderAscColumn(orderBy);
-//			DerbyC.sqlSection();
-//
-//			System.out.println("");//////////////////////////////////////////////
-//			System.out.println("DerbyC.sqlSection ＝" + DerbyC.sqlSection());////
-//			System.out.println("");//////////////////////////////////////////////
-//
-//			asc = (" ( " + columnName + " = " + ascName + " )");
-//			Monitor.display.setText(listName());
-//
-//			r = dataList();
-//
-//		}
-//		return r;
-//	}
 
 	static void initial(String setSqlSection) {
 

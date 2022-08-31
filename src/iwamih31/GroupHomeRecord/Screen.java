@@ -1072,7 +1072,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void office() {
-		// TODO 自動生成されたメソッド・スタブ
+
 		setMode(4);
 
 		officeInfo = new OfficeInfo();
@@ -1086,7 +1086,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void officeInfo() {
-		// TODO 自動生成されたメソッド・スタブ
+
 		System.out.println("");//////////////////////////////////////////
 		System.out.println("officeInfo() します");//////////////////////////
 		System.out.println("");//////////////////////////////////////////
@@ -1096,7 +1096,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		officeStatus();
 		info(dateInfo(), timeInfo(), toDoInfo());
 		centerTableE(officeInfo,officeInfo.getWidth());
-		menu = new String[]{"ST変更", "住所変更", "TEL変更", "FAX変更", "メール変更"};
+		menu = new String[]{"利用者一覧", "ST変更", "項目追加", "項目変更", "項目削除"};
 		menu(menu);
 		comment("⇒選択しで下さい");
 		change();
@@ -1110,47 +1110,47 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		System.out.println("officeAction(" + selectButtonName + ") します");////////
 		System.out.println("");//////////////////////////////////////////
 
-		if (selectButtonName.equals(menu[0])) {//ST変更
+		if (selectButtonName.equals(menu[0])) {//利用者一覧
 
 			recording();
 
 			toNormal();
 		}
 
-		if (selectButtonName.equals(menu[1])) {//住所変更
+		if (selectButtonName.equals(menu[1])) {//ST変更
 
 			recording();
 
-//			Event.selectMonth();
+//			OfficeSt.rewriteData();
 
-			event();
+			office();
 		}
 
-		if (selectButtonName.equals(menu[2])) {//TEL変更
+		if (selectButtonName.equals(menu[2])) {//項目追加
 
 			recording();
 
-//			Event.entry();
+			OfficeInfo.entry();
 
-			event();
+			office();
 		}
 
-		if (selectButtonName.equals(menu[3])) {//FAX変更
+		if (selectButtonName.equals(menu[3])) {//項目変更
 
 			recording();
 
-//			Event.rewriteData(selectRowData());
+			OfficeInfo.rewriteData(selectRowData());
 
-			event();
+			office();
 		}
 
-		if (selectButtonName.equals(menu[4])) {//メール変更
+		if (selectButtonName.equals(menu[4])) {//項目削除
 
 			recording();
 
-//			removeRow();
+			removeRow();
 
-			event();
+			office();
 		}
 
 		if (selectButtonName.equals(cancel)) {
