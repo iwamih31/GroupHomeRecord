@@ -654,7 +654,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		setMode(1);/////////////////////////////////////通常モードへ
 		TableData.allUser();
 		data();
-
+		ent = entMark;
 		setMessage("どうしますか?");
 		normal();
 		targetTableName = TableData.getTableName();
@@ -699,7 +699,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 			event();
 		}
 
-		if (selectButtonName.equals(menu[2])) {//To-Do登録
+		if (selectButtonName.equals(menu[2])) {//To-Do一覧
 
 			routine();
 		}
@@ -3075,11 +3075,11 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 		TableColumn col = st.getColumnModel().getColumn(0);
 		col.setCellRenderer(tableCellRendererC);
 		format(st);
-		st.setRowHeight(30);
+		st.setRowHeight(fontSize*2);
 		st.setShowVerticalLines(false);// 縦枠
 		st.setShowHorizontalLines(false);// 横枠
-		st.setPreferredSize(new Dimension(800, 100));
-		format(st.getTableHeader(), 30, 30);
+		st.setPreferredSize(new Dimension(w*70, h*20));
+		format(st.getTableHeader());
 		st.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
 		JPanel panel = new JPanel();
