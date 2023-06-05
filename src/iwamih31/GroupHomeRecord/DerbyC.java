@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class DerbyC{
 
 	private static String schemaName;
@@ -89,7 +91,7 @@ public class DerbyC{
 			System.out.println("テーブル" + name + "を使用出来ます");////
 			System.out.println("");//////////////////////////////////////
 		}
-		
+
 		System.out.println("");/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		System.out.println("new DerbyC(" + setUri + ", " + name + ", setColumnAndRule[][], " + ascColumn + ", " + numberName + ") しました");///
 		System.out.println("");/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +109,8 @@ public class DerbyC{
 		System.out.println("");////////////////////////////////////////////////////////
 		System.out.println("createTable(" + name + ", String setColumnRule)します");///
 		System.out.println("");////////////////////////////////////////////////////////
+
+		JOptionPane.showMessageDialog(null, schemaName + " に createTable(" + name + ", String setColumnRule) します");
 
 		if (tableCheck(name) == false) {
 
@@ -143,6 +147,8 @@ public class DerbyC{
 			} catch (SQLException e) {
 				e.getMessage();
 				e.printStackTrace();
+
+				JOptionPane.showMessageDialog(null, e.getMessage());
 
 				if (size(sqlSection()) > 0) {
 					// すでにあるので作らない
@@ -183,8 +189,8 @@ public class DerbyC{
 
 			// 後始末(インスタンスの正常クローズ)
 			st.close();
-			conn.close();			
-			
+			conn.close();
+
 			System.out.println("");////////////////////////////////////////////////
 			System.out.println("  " + name + " は存在します return true ");///
 			System.out.println("");////////////////////////////////////////////////
@@ -206,6 +212,7 @@ public class DerbyC{
 		} catch (SQLException e) {
 			e.getMessage();
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 
 		}
 		return tableCount;
@@ -246,17 +253,17 @@ public class DerbyC{
 			}
 		}
 		System.out.println(num + " = default");
-		
+
 		Object[] columns = columnsAll(setTableName);
-		
-		int columnsLength = columns.length - 1;//自動采番行を引く
-		
+
+		int columnsLength = columns.length - 1;	//	自動采番行を引く
+
 		System.out.println("");///////////////////////////////////////////////////
 		System.out.println("setRowData.length = "+ setRowData.length +" です");///
 		System.out.println("");///////////////////////////////////////////////////
 
-		if (setRowData.length == columnsLength) {////////////////番号列指定無しの場合
-			
+		if (setRowData.length == columnsLength) {	////////////////	番号列指定無しの場合
+
 			System.out.println("");/////////////////////////////////////
 			System.out.println("  ["+ num +"] は自動で采番されます");///
 			System.out.println("");/////////////////////////////////////
@@ -274,7 +281,7 @@ public class DerbyC{
 			}
 			valuesData = valuesData + "default";
 
-		} else {////////////////////////////////////////番号列指定有り([]が１つ多い)の場合
+		} else {////////////////////////////////////////	番号列指定有り([]が１つ多い)の場合
 
 			int many = setRowData.length - columnsLength;
 
@@ -319,40 +326,40 @@ public class DerbyC{
 	}
 
 	static void update(String setSql) {
-	
+
 		System.out.println("");/////////////////////////////
 		System.out.println("update(String setSql)");////////
 		System.out.println("");/////////////////////////////
 		System.out.println(" setSql ＜ "+setSql + " ＞");///
 		System.out.println(" を 実行 します");//////////////
 		System.out.println("");/////////////////////////////
-	
+
 		try {
 			conn = DriverManager.getConnection(uri);
 			// SQL送信用インスタンスの作成
 			st = conn.createStatement();
 			// SQL送信
 			st.executeUpdate(setSql);
-	
+
 			System.out.println("");/////////////////////
 			System.out.println("＜" + setSql + "＞");///
 			System.out.println("で update しました");///
 			System.out.println("");/////////////////////
-	
+
 			// 後始末(インスタンスの正常クローズ)
 			st.close();
 			conn.close();
-	
+
 			System.out.println("");/////////////////////////////////////
 			System.out.println("  update(" + setSql + ")");/////////////
 			System.out.println("  用インスタンスをクローズしました");///
 			System.out.println("");/////////////////////////////////////
-	
+
 		} catch (SQLException e) {
 			e.getMessage();
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	static void update(Object setColumnAndData, Object setWhere){
@@ -381,22 +388,22 @@ public class DerbyC{
 		String sql = " UPDATE " + setTableName + " SET " + setColumn + " = " + setData + " WHERE " + whereA + " = " + whereB;
 		update(sql);
 	}
-	
+
 	static void update(Object setTableName, Object setColumn, Object setData, Object[] whereColumn, Object[] whereData){
-		
+
 //		putCharSymbol(setColumn);
 
 		String sql = " UPDATE " + setTableName + " SET " + is(setColumn, setData) + andWhere(whereColumn, whereData);
-		
+
 		update(sql);
 	}
-	
+
 	static void update(Object setTableName, Object[] setColumn, Object[] setData, Object[] whereColumn, Object[] whereData){
-		
+
 //		putCharSymbol(setColumn);
 
 		String sql = " UPDATE " + setTableName + commaSet(setColumn, setData) + andWhere(whereColumn, whereData);
-		
+
 		update(sql);
 	}
 
@@ -1111,31 +1118,31 @@ public static void reNameTable(String tableName,String newTableName) {
 		return data(selectTable, (String) selectColumn, where);
 
 	}
-	
+
 	static Object[] columns(Object selectTable) {
-		
+
 		System.out.println("");//////////////////////////////////////
 		System.out.println("columns(" + selectTable + ") します");///
 		System.out.println("");//////////////////////////////////////
-		
+
 		Object[] columnsAll = columnsAll(selectTable);
 		Object numColumn = columnsAll[columnsAll.length - 1];
 		Object[] columnsNotAll = new Object[columnsAll.length - 1];
 		int colCount = columnsNotAll.length;
-		
+
 		for (int i = 0; i < colCount; i++) {
 			columnsNotAll[i] = columnsAll[i];
 		}
-		
+
 		System.out.println("");//////////////////////////////////////////////////////////////
 		System.out.println("(" + selectTable + ") から "+ numColumn +" 行を省いた数 は " + colCount + " です");///
 		System.out.println("");//////////////////////////////////////////////////////////////
 
 		return columnsNotAll;
 	}
-	
+
 	static Object[] columnsAll(Object selectTable) {
-		
+
 		System.out.println("");/////////////////////////////////////////
 		System.out.println("columnsAll(" + selectTable + ") します");///
 		System.out.println("");/////////////////////////////////////////
@@ -1145,20 +1152,20 @@ public static void reNameTable(String tableName,String newTableName) {
 		ResultSet sRs = sqlScrollResultSetRead(sql);
 
 		int colCount = 0;
-		
+
 		Object[] columns = null;
-		
+
 		try {
 
             colCount = sRs.getMetaData().getColumnCount();
-            
+
             columns = new Object[colCount];
-            
+
             System.out.println("");//////////////////////////////////////////////////////////////
-            
+
             for (int i = 0; i < columns.length; i++) {
             	columns[i] = sRs.getMetaData().getColumnName(i + 1);
-            	
+
 				System.out.print("[" + columns[i] + "]");
 			}
 
@@ -1196,7 +1203,7 @@ public static void reNameTable(String tableName,String newTableName) {
 		ResultSet sRs = sqlScrollResultSetRead(sql);
 
 		int colCount = 0;
-		
+
 		try {
 
             colCount = sRs.getMetaData().getColumnCount();
@@ -1352,12 +1359,12 @@ public static void reNameTable(String tableName,String newTableName) {
 				for (int j = 0; j < columnLength; j++) {
 					sRs.absolute(i+1);
 					dataList[i][j] = sRs.getObject(j+1);
-					
+
 					System.out.print("[" + dataList[i][j] + "]");///
 				}
 			}
 			System.out.println("");/////////////////////////////////
-			
+
 			// 後始末(インスタンスの正常クローズ)
 			st.close();
 			conn.close();
@@ -1377,15 +1384,15 @@ public static void reNameTable(String tableName,String newTableName) {
 		return dataList;
 
 	}
-	
+
 	public static Object[][] dataList(Object setTableName, String setSqlSection) {
-	
+
 		String sql = " SELECT  *  FROM " + setTableName  + setSqlSection;
 		return dataList(sql);
 	}
-	
+
 	public static Object[][] dataList(Object selectColumn, Object tableName, Object whereSql, Object orderBySql) {
-		
+
 		String sql = select(selectColumn, tableName, whereSql, orderBySql);
 		return dataList(sql);
 	}
@@ -1423,12 +1430,12 @@ public static void reNameTable(String tableName,String newTableName) {
 				for (int j = 0; j < columnLength; j++) {
 					sRs.absolute(i+1);
 					dataList[i][j] = sRs.getObject(j+1);
-					
+
 					System.out.print("[" + dataList[i][j] + "]");///
 				}
 			}
 			System.out.println("");/////////////////////////////////
-			
+
 			// 後始末(インスタンスの正常クローズ)
 			st.close();
 			conn.close();
@@ -1450,9 +1457,9 @@ public static void reNameTable(String tableName,String newTableName) {
 	}
 
 	public static Object[][] minusNumList(Object setTableName, String setSqlSection) {
-		
+
 		String sql = " SELECT  *  FROM " + setTableName  + setSqlSection;
-		
+
 		return minusNumList(sql);
 	}
 
@@ -1621,7 +1628,7 @@ public static void reNameTable(String tableName,String newTableName) {
 				st.executeUpdate(sql);
 
 				System.out.println("");////////////////////////////////////////////////////////////
-				System.out.println("テーブル " + setTableName + " から ＜" + whereSql + "＞た");///
+				System.out.println("テーブル " + setTableName + " から ＜" + whereSql + "＞ ");///
 				System.out.println("の行を 削除 しました");////////////////////////////////////////
 				System.out.println("");////////////////////////////////////////////////////////////
 
@@ -1655,7 +1662,7 @@ public static void reNameTable(String tableName,String newTableName) {
 
 		delete(setTableName, where(whereColumn, whereData));
 	}
-	
+
 	public static void delete(Object setTableName, Object[] whereColumnList, Object[] whereDataList) {
 
 		delete(setTableName, andWhere(whereColumnList, whereDataList));
@@ -1708,12 +1715,12 @@ public static void reNameTable(String tableName,String newTableName) {
 
 		return selection(selectColumn, setTableName, whereColumn, whereData, orderAscColumn);
 	}
-	
+
 	public static Object[][] selection(Object selectColumn, Object setTableName, Object whereColumn, Object whereData, Object ascColumn) {
-		
+
 		Object[] whereColumnList = new Object[]{whereColumn};
 		Object[] whereDataList = new Object[]{whereData};
-		
+
 		return selection(selectColumn, setTableName, whereColumnList, whereDataList, ascColumn);
 	}
 
@@ -1730,7 +1737,7 @@ public static void reNameTable(String tableName,String newTableName) {
 		if(setTableName.equals("") || setTableName == null) setTableName = tableN;
 
 		whereColumnData = andWhere(whereColumnList, whereDataList);
-		
+
 		orderAscColumn = orderByAsc(ascColumn);
 
 		System.out.println("");//////////////////////////////////////////////////////////////
@@ -1750,18 +1757,18 @@ public static void reNameTable(String tableName,String newTableName) {
 		return dataList(sql);
 
 	}
-	
+
 	static String orderBy(Object orderBySql) {
-		
+
 		String sql = (" ORDER BY " + orderBySql);
 
 		if(orderBySql.equals("") || orderBySql == null) sql = "";
-		
+
 		return sql;
 	}
 
 	static String orderByAsc(Object ascColumn) {
-		
+
 		String orderSql = (" ORDER BY " + ascColumn);
 
 		if(ascColumn == null) {
@@ -1771,16 +1778,16 @@ public static void reNameTable(String tableName,String newTableName) {
 				orderSql = "";
 			}
 		}
-		
+
 		return orderSql;
 	}
-	
+
 	private static String orderByDesc(Object descColumn) {
-		
+
 		String orderSql = (" ORDER BY " + descColumn + " DESC ");
 
 		if(descColumn.equals("") || descColumn == null) orderSql = "";
-		
+
 		return orderSql;
 	}
 
@@ -1968,18 +1975,18 @@ public static void reNameTable(String tableName,String newTableName) {
 		return dataList;
 
 	}
-	
+
 	public static Object[][] distinctList(Object setTableName, String distinctColumn, String whereSql, String orderColumn) {
-		
+
 		String setSqlSection = "";
-		
+
 		if (whereSql.equals("") == false){
 			setSqlSection = setSqlSection + " WHERE " + whereSql;
 		}
 		if (orderColumn.equals("") == false){
 			setSqlSection = setSqlSection + " ORDER BY " + orderColumn;
 		}
-		
+
 		return distinctList(setTableName, distinctColumn, setSqlSection);
 	}
 
@@ -1998,7 +2005,7 @@ public static void reNameTable(String tableName,String newTableName) {
 			sRs.last();
 
 			int size = sRs.getRow();
-			
+
 			int columnCount = sRs.getMetaData().getColumnCount();
 
 			dataList = new Object[size][columnCount];
@@ -2101,19 +2108,19 @@ public static void reNameTable(String tableName,String newTableName) {
 	}
 
 	private static String where(Object whereColumnName, Object whereData) {
-		
+
 		String r = null;
 
 		Object[] arrays = {};
 
 		if (whereColumnName.getClass() == arrays.getClass()) {
-			
+
 			Object[] columnData = (Object[]) whereColumnName;
-			
+
 			Object[] rowData = (Object[]) whereData;
-			
+
 			r = andWhere(columnData, rowData);
-			
+
 		} else {
 
 			if (isNum(whereData) == true) {
@@ -2124,48 +2131,48 @@ public static void reNameTable(String tableName,String newTableName) {
 		}
 		return r;
 	}
-	
+
 	private static String where(Object whereSql) {
-		
+
 		String sql = " WHERE " + whereSql;
-		
+
 		if(whereSql.equals("") || whereSql == null) sql = "";
-		
+
 		return sql;
 	}
-	
+
 	private static String set(Object whereColumnName, Object whereData) {
-		
+
 		String r = null;
 
 		Object[] arrays = {};
 
 		if (whereColumnName.getClass() == arrays.getClass()) {
-			
+
 			Object[] columnData = (Object[]) whereColumnName;
-			
+
 			Object[] rowData = (Object[]) whereData;
-			
+
 			r = commaSet(columnData, rowData);
-			
+
 		} else {
 
 			if (isNum(whereData) == false) {
-				
+
 				whereData = putCharSymbol(whereData);
 			}
 			r = " Set " + whereColumnName + " = '" + whereData + "'";
 		}
 		return r;
 	}
-	
+
 	static String whereAsc(Object whereColumnName, Object whereData, Object ascColumnName) {
 
 		String where = where(whereColumnName,  whereData);
 
 		return where + orderByAsc(ascColumnName);
 	}
-	
+
 	private static String whereDesc(Object whereColumnName, Object whereData, Object descColumnName) {
 
 		String where = where(whereColumnName,  whereData);
@@ -2176,7 +2183,7 @@ public static void reNameTable(String tableName,String newTableName) {
 	static String is(Object columnName, Object data) {
 
 		String r = "";
-		
+
 		if (columnName != null && columnName.equals("") == false) {
 
 			if (isNum(data) == true) {
@@ -2190,9 +2197,9 @@ public static void reNameTable(String tableName,String newTableName) {
 
 
 	private static Object[] is(Object[] columnData, Object[] rowData) {
-		
+
 		int isLength = columnData.length;;
-		
+
 		if (columnData.length > rowData.length) {
 			isLength = rowData.length;
 		}
@@ -2205,7 +2212,7 @@ public static void reNameTable(String tableName,String newTableName) {
 		}
 		return whereData;
 	}
-	
+
 	public static String comma(Object[] connectData) {
 
 		String sql = "" + connectData[0];
@@ -2213,20 +2220,20 @@ public static void reNameTable(String tableName,String newTableName) {
 		for (int i = 1; i < connectData.length; i++) {
 
 			if(connectData[i] != null){
-				
+
 				if(connectData[i].equals("")) connectData[i] = "''";
-				
+
 				sql = sql + ", " + connectData[i];
 			}
 		}
 		return sql + " ";
 	}
-	
+
 	public static String comma(Object[] columnData, Object[] rowData) {
 
 		return comma(is(columnData, rowData));
 	}
-	
+
 	public static String commaSet(Object[] whereData) {
 
 		return " SET " + comma(whereData);
@@ -2236,11 +2243,11 @@ public static void reNameTable(String tableName,String newTableName) {
 
 		return " SET " + comma(is(columnData, rowData));
 	}
-	
+
 	public static String and(Object connectDataA, Object connectDataB) {
-		
+
 		String sql = connectDataA + " AND " + connectDataB;
-		
+
 		return sql;
 	}
 
@@ -2251,9 +2258,9 @@ public static void reNameTable(String tableName,String newTableName) {
 		for (int i = 1; i < connectData.length; i++) {
 
 			if(connectData[i] != null){
-				
+
 				if(connectData[i].equals("")) connectData[i] = "''";
-				
+
 				sql = sql + " AND " + connectData[i];
 			}
 		}
@@ -2274,9 +2281,9 @@ public static void reNameTable(String tableName,String newTableName) {
 
 		return " WHERE " + and(is(columnData, rowData));
 	}
-	
+
 	public static String select(Object[] selectList) {
-	
+
 		String sql = " SELECT ";
 		for (int i = 0; i < selectList.length; i++) {
 			sql = sql + selectList[i];
@@ -2291,26 +2298,26 @@ public static void reNameTable(String tableName,String newTableName) {
 		String sql = select(selectList) + from(tableName);
 		return sql;
 	}
-	
+
 	public static String select(Object selectColumn, Object tableName) {
 		String sql = select(selectColumn) + from(tableName);
 		return sql;
 	}
-	
+
 	public static String select(Object selectColumn, Object tableName, Object whereSql) {
 		String sql = select(selectColumn) + from(tableName) + where(whereSql);
 		return sql;
 	}
-	
+
 	public static String select(Object selectColumn, Object tableName, Object whereSql, Object orderBySql) {
 		String sql = select(selectColumn) + from(tableName) + where(whereSql) + orderBy(orderBySql);
 		return sql;
 	}
-	
+
 	public static String select(Object selectColumn) {
-		
+
 		if(selectColumn.equals("") || selectColumn == null) selectColumn = "*";
-		
+
 		String sql = " SELECT " + selectColumn + " ";
 		return sql;
 	}
@@ -2318,23 +2325,23 @@ public static void reNameTable(String tableName,String newTableName) {
 	public static String from(Object tableName) {
 
 		String sql = " FROM " + tableName + " ";
-		
+
 		return sql;
 	}
 
 	public static String selectWhereAsc(Object[] selectList, Object tableName, Object[] whereColumnList, Object[] whereDataList, String ascColumn) {
 
 		String select = DerbyC.select(selectList, tableName);
-		
+
 		String whereAsc = DerbyC.whereAsc(whereColumnList, whereDataList, ascColumn);
-		
+
 		String sql = select + whereAsc;
-		
+
 		return sql;
 	}
-	
+
 	static Object[][] switchQueues(Object[][] dataList) {
-		
+
 		Object[][] switchQueues = new Object[dataList[0].length][dataList.length];
 		for (int i = 0; i < dataList.length; i++) {
 			for (int j = 0; j < dataList[0].length; j++) {
@@ -2343,10 +2350,10 @@ public static void reNameTable(String tableName,String newTableName) {
 		}
 		return switchQueues;
 	}
-	
+
 	static Object[] selectList(Object setTableName, String distinctColumn, String whereSql, String orderColumn) {
-		
-		return switchQueues(distinctList(setTableName, distinctColumn, whereSql, orderColumn))[0]; 
+
+		return switchQueues(distinctList(setTableName, distinctColumn, whereSql, orderColumn))[0];
 	}
 }
 

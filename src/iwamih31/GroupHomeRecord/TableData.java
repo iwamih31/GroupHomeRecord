@@ -1,6 +1,8 @@
 package iwamih31.GroupHomeRecord;
 
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -45,7 +47,12 @@ public class TableData extends AbstractTableModel implements Serializable {
 		System.out.println("new TableData() します");//////////////////////////
 		System.out.println("");/////////////////////////////////////////////
 
-		uri = "DbCaRe " + Main.getOfficeName();
+		Path path = Paths.get("");
+		String absolutePath = path.toAbsolutePath().toString();
+
+//		JOptionPane.showMessageDialog(null, "絶対Path = " + absolutePath);
+
+		uri = absolutePath + "/" + "DbCaRe " + Main.getOfficeName();
 
 		tableName = "userList";
 
@@ -115,8 +122,13 @@ public class TableData extends AbstractTableModel implements Serializable {
 
 		asc = " ( " + ascColumn + " = " + ascData[0] + " )";
 
+
+//		JOptionPane.showMessageDialog(null, "new DerbyC(uri, tableName, ColumnRule, ascColumn, numberName) します");
+
 		// DB作成( DBファイル名[アドレス], テーブル名, 行名&定義[二次元配列で],並べ替え基準行名,自動采番行名 )
 		dbc = new DerbyC(uri, tableName, ColumnRule, ascColumn, numberName);
+
+//		JOptionPane.showMessageDialog(null, "new DerbyC(uri, tableName, ColumnRule, ascColumn, numberName) しました");
 
 //		data = new Object[1][columns.length];//仮のデータ
 
@@ -900,28 +912,24 @@ public class TableData extends AbstractTableModel implements Serializable {
 
 	private static String level(Object initialSelectionLevel) {
 
-		String inpName = Screen.inpDS("介護度は？", initialSelectionLevel);
-		if (inpName != null) {
-//			if (isNumber(inpName)) inpName = "品番" + inpName;
-			if (inpName.equals("")) {
+		String inpText = Screen.inpDS("介護度は？", initialSelectionLevel);
+		if (inpText != null) {
+			if (inpText.equals("")) {
 				Object[] selectData = new Object[]{ "要介護１", "要介護２", "要介護３", "要介護４", "要介護５", "要支援１", "要支援２", };/////選択用データ配列
-				inpName = (String) Screen.selectDS("介護度を選択して下さい", selectData);
+				inpText = Screen.selectDS("介護度を選択して下さい", selectData);
 			}
 
 			System.out.println("");/////////////////////////////////////////////////////
-			System.out.println("inpName＝(" + inpName + ")");/////////////////////////////////
+			System.out.println("inpName＝(" + inpText + ")");/////////////////////////////////
 			System.out.println("");/////////////////////////////////////////////////////
 
-			if (inpName.equals("") || inpName.equals(" ")) {
-//				inpName = "I" + todayEHms();
+			if (inpText.equals("") || inpText.equals(" ")) {
 				System.out.println("");///////////////////////////////////////////////////
-				System.out.println("介護度 を入力日時 (" + inpName + ") に設定しました");//////
+				System.out.println("介護度 を (" + inpText + ") に設定しました");//////
 				System.out.println("");///////////////////////////////////////////////////
 			}
 		}
-//		Monitor.display.setText("品名 = " + inpName);
-
-		return inpName;
+		return inpText;
 	}
 
 	private static int startAD() {
@@ -1486,12 +1494,6 @@ public class TableData extends AbstractTableModel implements Serializable {
 
 	@Override
 	public int getColumnCount() {
-//		if (Screen.getMode() < (1)) {
-//			pGet();
-//		}else{
-//			pSt();
-//		}
-
 		return columns.length;
 	}
 

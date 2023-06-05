@@ -1,9 +1,6 @@
 package iwamih31.GroupHomeRecord;
 
-import java.util.Arrays;
-
 import javax.swing.JLabel;
-import javax.swing.table.AbstractTableModel;
 
 public class Detail extends MyAbstractTableModel{
 
@@ -29,7 +26,7 @@ public class Detail extends MyAbstractTableModel{
 	Detail(Object setTime, Object setToDo) {
 
 		System.out.println("");//////////////////////////////////////////////////////
-		System.out.println("new OnTime(" + setTime + ", " + setToDo + ")します");////
+		System.out.println("new Detail(" + setTime + ", " + setToDo + ")します");////
 		System.out.println("");//////////////////////////////////////////////////////
 
 		uri = TableData.getUri();
@@ -37,7 +34,7 @@ public class Detail extends MyAbstractTableModel{
 		numberName = "番号";
 
 		selectDate = Screen.getSelectDate();
-		
+
 		dataList = OnTime.oneDay(selectDate);
 
 //		times = times();
@@ -91,7 +88,7 @@ public class Detail extends MyAbstractTableModel{
 		width[0] = 80;
 		width[1] = 120;
 		width[2] = 300;
-		
+
 		horizontalAlignments = new int[tableColumns.length];
 		horizontalAlignments[0] = JLabel.CENTER;
 		horizontalAlignments[1] = JLabel.CENTER;
@@ -123,7 +120,7 @@ public class Detail extends MyAbstractTableModel{
 	}
 
 	static Object[][] list(Object selectDate, Object setTime, Object setToDo) {
-		
+
 		columns();
 
 		tableColumns = new String[]{columns[0],columns[1],columns[5]};
@@ -156,13 +153,13 @@ public class Detail extends MyAbstractTableModel{
 	static void insertBlank(Object selectDate) {
 
 		Object[][] selectDateToDo = selectData(columns()[2], selectDate);
-		
+
 		int rowCount = selectDateToDo.length;
-				
+
 		if (selectDateToDo.length > 0) {
-			
+
 			int columnCount = selectDateToDo[0].length;
-			
+
 			System.out.println("");////////////////////////////////////////////////////////////////////////////////////////////////////////
 			System.out.println(selectDate + " の ToDoデータ は [" + rowCount + "][" + columnCount + "] です");///
 			System.out.println("");////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +168,7 @@ public class Detail extends MyAbstractTableModel{
 			System.out.println(selectDate + " の ToDoデータ は 存在しません");///
 			System.out.println("");///////////////////////////////////////////////
 		}
-		
+
 		Object[][] toDoList = Routine.data();
 
 		Object[][] userList = TableData.allUser();
@@ -217,16 +214,16 @@ public class Detail extends MyAbstractTableModel{
 	}
 
 	private static String[] columns() {
-		
+
 		columns = OnTime.getColumns();
-		
+
 		return columns;
 	}
 
 	static Object[][] selectList() {
-		
+
 		String selectColumn = columns[0] + " + ' ' + " + columns[1];
-		
+
 		return DerbyC.dataList(selectColumn, tableName(), "", columns[0]);
 	}
 

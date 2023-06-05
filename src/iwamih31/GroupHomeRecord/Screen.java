@@ -473,7 +473,6 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 			case 0 ://最初
 				if (buttonName.equals(ynList[0])) {
 
-//					Main.save();
 					Main.load();
 
 					tableData = new TableData();
@@ -612,9 +611,14 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 					inputName("名前");
 				}
 			}
-
 			Main.begin();
+
+//			JOptionPane.showMessageDialog(null, "new TableData() します");
+
 			tableData = new TableData();
+
+//			JOptionPane.showMessageDialog(null, "new TableData() しました");
+
 			tableData.start();
 			story = new Story();
 			story.on("[ " + officeName + " ] の介護記録を開始します");
@@ -2429,11 +2433,11 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 		setColumnHeaderHeight(scrollPane, fontSize / 2 * 3);
 
-//		scrollPane.setColumnHeader(new JViewport() {///JViewport#getPreferredSize()をオーバーライド
+//		scrollPane.setColumnHeader(new JViewport() { ///JViewport#getPreferredSize()をオーバーライド
 //
 //					public Dimension getPreferredSize() {
 //						Dimension d = super.getPreferredSize();
-//						d.height = 30;/////////////////////////////////////JTableHeaderの高さを設定
+//						d.height = 30; /////////////////////////////////////JTableHeaderの高さを設定
 //						return d;
 //					}
 //				});
@@ -2996,7 +3000,7 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 
 	private void comboCellEditor(TableColumn tableColumn, Object[] selectlist) {
 	    // tableColumn のセルエディターにドロップダウンを使用
-	    JComboBox combo = new JComboBox();
+	    JComboBox<Object> combo = new JComboBox<Object>();
 
 	    combo.addItem("");
 
@@ -3025,6 +3029,8 @@ public class Screen extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void scene() {
+
+//		JOptionPane.showMessageDialog(null, "scene() します");
 
 		setBackPanel("フィールド.png");
 
